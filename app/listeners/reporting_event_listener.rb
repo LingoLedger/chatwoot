@@ -21,6 +21,8 @@ class ReportingEventListener < BaseListener
 
   def first_reply_created(event)
     message = extract_message_and_account(event)[0]
+    return if message.created_by == 'Campaign'
+
     conversation = message.conversation
     first_response_time = message.created_at.to_i - conversation.created_at.to_i
 

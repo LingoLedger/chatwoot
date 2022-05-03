@@ -6,6 +6,7 @@
 #  content             :text
 #  content_attributes  :json
 #  content_type        :integer          default("text"), not null
+#  created_by          :string
 #  external_source_ids :jsonb
 #  message_type        :integer          not null
 #  private             :boolean          default(FALSE)

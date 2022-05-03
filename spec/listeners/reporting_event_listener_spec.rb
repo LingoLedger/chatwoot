@@ -60,5 +60,18 @@ describe ReportingEventListener do
         expect(account.reporting_events.where(name: 'first_response')[0]['value_in_business_hours']).to be 144_000.0
       end
     end
+
+    context 'when campaign is enabled' do
+      let!(:message) do
+        create(:message, message_type: 'outgoing', content: 'Hi', created_by: 'Campaign',
+                         account: account, inbox: inbox, conversation: conversation)
+      end
+
+      it 'does not create first_response event' do
+        event = Events::Base.new('first.reply.created', Time.zone.now, message: message)
+        listener.first_reply_created(event)
+        expect(account.reporting_events.where(name: 'first_response')).to be_empty
+      end
+    end
   end
 end
